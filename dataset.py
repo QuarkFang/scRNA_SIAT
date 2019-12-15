@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine, Column, String, Integer
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from csv import reader
+import os
+
 
 Base = declarative_base()
 
@@ -23,7 +26,7 @@ class Marker(Base):
     cell_type = Column(String(128))
     cell_name = Column(String(128))
     cell_ontology_ID = Column(String(128))
-    cell_marker = Column(String(128))
+    cell_marker = Column(String(256))
     PMID = Column(String(128))
 
 
@@ -57,8 +60,39 @@ def delete(record_ID: int):
 
 def query(cell_marker):
     session = DBSession()
-    result = session.query(Marker).filter(Marker.cell_marker == cell_marker).all()
+    result = session.query(Marker).filter(Marker.cell_marker.like('%'+cell_marker+'%')).all()
     cells = [cell.to_dict() for cell in result]
     session.commit()
     session.close()
     return cells
+
+
+def update_db(filename: str):
+    if not os.path.exists(filename):
+        raise ValueError('the file is not existed!')
+
+    session = DBSession()
+
+    file = open(filename, 'r')
+    data = reader(file)
+    for i, row in enumerate(data):
+        if i is not 0:
+            record_ID = i - 1
+            species_type = row[0]
+            tissue_type = row[1]
+            uberon_ontology_ID = row[2]
+            cancer_type = row[3]
+            cell_type = row[4]
+            cell_name = row[5]
+            cell_ontology_ID = row[6]
+            cell_marker = row[7]
+            PMID = row[13]
+
+            new = Marker(record_ID=record_ID, species_type=species_type, tissue_type=tissue_type,
+                         uberon_ontology_ID=uberon_ontology_ID, cancer_type=cancer_type,
+                         cell_type=cell_type, cell_name=cell_name, cell_ontology_ID=cell_ontology_ID,
+                         cell_marker=cell_marker, PMID=PMID)
+            session.add(new)
+
+    session.commit()
+    session.close()

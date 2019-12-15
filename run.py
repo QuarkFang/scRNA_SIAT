@@ -1,4 +1,7 @@
-import dataset
+import dataset as db
+import match
+import numpy as np
+import plot as plt
 
 
 if __name__ == '__main__':
@@ -6,5 +9,10 @@ if __name__ == '__main__':
     #             'Proximal tubular cell', 'NA', 'AA1',
     #             '9263997')
 
-    a = dataset.query('AAA')
-    print(a)
+    # a = db.query('%NFKBIA%')
+    # print(a)
+
+    b = np.load('adata_scores.npy')
+    a = np.load('adata_names.npy')
+    c, names, scores = match.match(a, b)
+    plt.show_possibility(c, names, scores)
