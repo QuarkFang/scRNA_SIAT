@@ -10,9 +10,9 @@ def recarray2ndarray(rec: np.recarray):
     return np.array(res).T
 
 
-def marker_cell(names: np.ndarray, scores: np.ndarray):
-    names = names[:, 0:10]
-    scores = scores[:, 0:10]
+def marker_cell(names: np.ndarray, scores: np.ndarray, top_gene=10):
+    names = names[:, 0:top_gene]
+    scores = scores[:, 0:top_gene]
     group_num = np.shape(names)[0]
 
     all_names = []
@@ -94,9 +94,9 @@ def normalize(list_all: list):
     return list_all
 
 
-def match(names: np.recarray, scores: np.recarray):
+def match(names: np.recarray, scores: np.recarray, top_gene=25):
     names = recarray2ndarray(names)
     scores = recarray2ndarray(scores)
-    list_a, list_b, list_c = marker_cell(names, scores)
+    list_a, list_b, list_c = marker_cell(names, scores, top_gene=top_gene)
     list_all = list_sort(list_a, list_b, list_c)
     return list_all, names, scores

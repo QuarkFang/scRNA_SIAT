@@ -15,14 +15,14 @@ def compute_weight(list_all: list, scores: np.ndarray, group_number: int):
     return list_all
 
 
-def show_possibility(list_all: list, names: np.ndarray, scores: np.ndarray, col=4):
+def show_possibility(list_all: list, names: np.ndarray, scores: np.ndarray, gene_number=10, col=4):
     plot_number = len(list_all)
     group_number = np.shape(names)[0]
     plot_row = round(plot_number / col + 0.5)
 
-    list_all = compute_weight(list_all, scores, group_number)
+    list_all = compute_weight(list_all, scores, gene_number)
 
-    plt.figure(figsize=(15, 20), dpi=600)
+    plt.figure(figsize=(15, 20), dpi=200)
 
     cmap = plt.cm.get_cmap("Spectral")
 
@@ -35,14 +35,14 @@ def show_possibility(list_all: list, names: np.ndarray, scores: np.ndarray, col=
             y.append(list_col[3])
         y = np.array(y).T
         bottom = np.zeros(len(list_row))
-        for j in range(group_number):
-            plt.bar(x, y[j], bottom=bottom, color=cmap(int(256/(group_number-1))*(j+2)), label=names[i, j])
+        for j in range(gene_number):
+            plt.bar(x, y[j], width=0.6, bottom=bottom, color=cmap(int(256/(gene_number-1))*j), label=names[i, j])
             bottom = bottom + y[j]
 
         plt.title('%d vs. rest' % i, size=40)
         plt.legend(loc='upper right', prop={'size': 15})
         plt.xticks(size=15, rotation=90, horizontalalignment='right')
-        plt.yticks(size=40)
+        plt.yticks(size=20)
         plt.grid(axis='y', color='gray', linestyle=':', linewidth=2)
         plt.grid(axis='x', color='gray', linestyle=':', linewidth=2)
 

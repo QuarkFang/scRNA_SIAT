@@ -14,5 +14,5 @@ if __name__ == '__main__':
 
     b = np.load('adata_scores.npy')
     a = np.load('adata_names.npy')
-    c, names, scores = match.match(a, b)
-    plt.show_possibility(c, names, scores)
+    c, names, scores = match.match(a, b, top_gene=25)
+    plt.show_possibility(c, names, scores, gene_number=25)  # gene_number < top_gene
