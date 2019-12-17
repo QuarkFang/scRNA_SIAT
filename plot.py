@@ -39,7 +39,7 @@ def show_possibility(list_all: list, names: np.ndarray, scores: np.ndarray, gene
             plt.bar(x, y[j], width=0.6, bottom=bottom, color=cmap(int(256/(gene_number-1))*j), label=names[i, j])
             bottom = bottom + y[j]
 
-        plt.title('%d vs. rest' % i, size=40)
+        plt.title('Group %d' % i, size=40)
         plt.legend(loc='upper right', prop={'size': 15})
         plt.xticks(size=15, rotation=90, horizontalalignment='right')
         plt.yticks(size=20)
