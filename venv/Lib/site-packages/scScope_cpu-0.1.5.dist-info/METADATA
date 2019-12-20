@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: scScope-cpu
+Version: 0.1.5
+Summary: scScope is a deep-learning based approach for single cell RNA-seq analysis. 
+Home-page: https://github.com/AltschulerWu-Lab/scScope
+Author: ['Yue Deng', 'Feng Bao']
+Author-email: yue.deng@ucsf.edu
+License: Apache License 2.0
+Platform: UNKNOWN
+Requires-Dist: numpy (>=1.14.0)
+Requires-Dist: pandas (>=0.21.0)
+Requires-Dist: scipy
+Requires-Dist: scikit-learn (>=0.18.0)
+Requires-Dist: phenograph
+Requires-Dist: tensorflow (>=1.2.1)
+
+UNKNOWN
+
+
